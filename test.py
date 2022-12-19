@@ -1,5 +1,4 @@
 import streamlit as st
-from spacy import displacy
 from gensim.summarization import summarize
 
 def main():
