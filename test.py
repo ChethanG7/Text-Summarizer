@@ -34,10 +34,11 @@ def main():
     if uploaded_file is not None:
 #         bytes_data = uploaded_file.getvalue()
         data = pd.read_excel(uploaded_file)     
-        st.session_state["preview"] = data[:10]
-#         for i in range(0, min(5, len(data))):
-#             st.session_state["preview"] = st.session_state["preview"]+ data[i]
-    preview = st.text_area("File Preview", "", height=150, key="preview")
+        st.dataframe(data)
+#         st.session_state["preview"] = data[:10]
+# #         for i in range(0, min(5, len(data))):
+# #             st.session_state["preview"] = st.session_state["preview"]+ data[i]
+#     preview = st.text_area("File Preview", "", height=150, key="preview")
     upload_state = st.text_area("Upload State", "", key="upload_state")
 #     def upload():
 #         if uploaded_file is None:
