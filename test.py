@@ -34,7 +34,7 @@ def main():
     if uploaded_file is not None:
 #         bytes_data = uploaded_file.getvalue()
         data = pd.read_excel(uploaded_file)     
-        st.dataframe(data)
+        st.write(data.head(10))
 #         st.session_state["preview"] = data[:10]
 # #         for i in range(0, min(5, len(data))):
 # #             st.session_state["preview"] = st.session_state["preview"]+ data[i]
