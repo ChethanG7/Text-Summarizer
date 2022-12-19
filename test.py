@@ -32,7 +32,7 @@ def main():
     uploaded_file = st.file_uploader("Choose a CSV file")
     if uploaded_file is not None:
         bytes_data = uploaded_file.getvalue()
-        data = uploaded_file.getvalue().decode('utf-8').splitlines()         
+        data = uploaded_file.getvalue().splitlines()         
         st.session_state["preview"] = ''
         for i in range(0, min(5, len(data))):
             st.session_state["preview"] += data[i]
@@ -42,7 +42,7 @@ def main():
         if uploaded_file is None:
             st.session_state["upload_state"] = "Upload a file first!"
         else:
-            data = uploaded_file.getvalue().decode('utf-8')
+            data = uploaded_file.getvalue()
             parent_path = pathlib.Path(__file__).parent.parent.resolve()           
             save_path = os.path.join(parent_path, "data")
             complete_name = os.path.join(save_path, uploaded_file.name)
