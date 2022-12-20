@@ -11,7 +11,7 @@ def main():
     
     with st.sidebar:
         choose = option_menu("App Gallery", ["About", "Text Summarization", "Topic Modelling",  "Contact"],
-                             icons=['house', 'book', 'top','person lines fill'],
+                             icons=['house', 'book', 'align top','person lines fill'],
                              menu_icon="app-indicator", default_index=0,
                              styles={
             "container": {"padding": "5!important", "background-color": "#fafafa"},
