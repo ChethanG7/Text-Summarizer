@@ -46,8 +46,12 @@ def main():
             """)
             
             def process(data,column_choice,summary_choice):
+                def convert_df(data):
+                    writer = pd.ExcelWriter(data, engine='xlsxwriter')
+                    writer.save()
+                    
                 st.download_button("Press to Download",
-                                   data,
+                                   convert_df(data),
                                    "processed_file.xlsx",
                                    "text/xlsx")
             
