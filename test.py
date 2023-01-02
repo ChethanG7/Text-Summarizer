@@ -56,8 +56,7 @@ def main():
                     
                 st.download_button("Press to Download",
                                    convert_df(data),
-                                   "processed_file.xlsx",
-                                   "text/xlsx")
+                                   "processed_file.xlsx")
             
             uploaded_file = st.file_uploader("Choose a Excel file")
             if uploaded_file is not None:
