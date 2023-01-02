@@ -47,14 +47,14 @@ def main():
             """)
             
             def process(data,column_choice,summary_choice):
-                def convert_df(data):
+#                 def convert_df(data):
 #                     output = BytesIO()
 #                     writer = pd.ExcelWriter(output, engine='xlsxwriter')
 #                     data.to_excel(writer, index=False, sheet_name='Sheet1')
 #                     processed_data = output.getvalue()
 #                     return processed_data
-                      return data
-                return convert_df(data)   
+#                       return data
+                return data
 #                 st.download_button("Press to Download",
 #                                    convert_df(data),
 #                                    "processed_file.xlsx")
