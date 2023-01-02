@@ -53,7 +53,14 @@ def main():
                     st.write('Preview of the attached file',data.head(10))
                     column_choice = st.selectbox("Select Column" , data.columns.to_list())
                     summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
-                    st.button("Submit")
+                    st.button("Submit",on_click=process(data,column_choice,summary_choice))
+         
+        def process(data,column_choice,summary_choice):
+            st.download_button("Press to Download",
+                               data,
+                               "processed_file.xlsx",
+                               "text/xlsx")
+            
     #         st.session_state["preview"] = data[:10]
     # #         for i in range(0, min(5, len(data))):
     # #             st.session_state["preview"] = st.session_state["preview"]+ data[i]
