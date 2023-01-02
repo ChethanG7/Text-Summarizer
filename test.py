@@ -66,7 +66,8 @@ def main():
                     st.write('Preview of the attached file',data.head(10))
                     column_choice = st.selectbox("Select Column" , data.columns.to_list())
                     summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
-            st.button("Submit",on_click=process(data,column_choice,summary_choice))
+                
+                st.button("Submit",on_click=process(data,column_choice,summary_choice))
          
         
             
