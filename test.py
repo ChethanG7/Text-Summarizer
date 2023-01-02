@@ -49,6 +49,7 @@ def main():
         #         bytes_data = uploaded_file.getvalue()
                 data = pd.read_excel(uploaded_file)     
                 st.write('Preview of the attached file',data.head(10))
+                summary_choice = st.selectbox("Select Column" , data.columns.to_list())
                 st.button("Submit")
     #         st.session_state["preview"] = data[:10]
     # #         for i in range(0, min(5, len(data))):
