@@ -45,6 +45,12 @@ def main():
             ### Document Text Summary
             """)
             
+            def process(data,column_choice,summary_choice):
+                st.download_button("Press to Download",
+                                   data,
+                                   "processed_file.xlsx",
+                                   "text/xlsx")
+            
             uploaded_file = st.file_uploader("Choose a Excel file")
             if uploaded_file is not None:
         #         bytes_data = uploaded_file.getvalue()
@@ -55,11 +61,7 @@ def main():
                     summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
                     st.button("Submit",on_click=process(data,column_choice,summary_choice))
          
-        def process(data,column_choice,summary_choice):
-            st.download_button("Press to Download",
-                               data,
-                               "processed_file.xlsx",
-                               "text/xlsx")
+        
             
     #         st.session_state["preview"] = data[:10]
     # #         for i in range(0, min(5, len(data))):
