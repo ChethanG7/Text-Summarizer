@@ -53,10 +53,10 @@ def main():
                     data.to_excel(writer, index=False, sheet_name='Sheet1')
                     processed_data = output.getvalue()
                     return processed_data
-                    
-                st.download_button("Press to Download",
-                                   convert_df(data),
-                                   "processed_file.xlsx")
+                return st.write('Output file',data.head(10))   
+#                 st.download_button("Press to Download",
+#                                    convert_df(data),
+#                                    "processed_file.xlsx")
             
             uploaded_file = st.file_uploader("Choose a Excel file")
             if uploaded_file is not None:
