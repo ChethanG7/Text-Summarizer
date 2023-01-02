@@ -44,7 +44,8 @@ def main():
             st.write("""
             ### Document Text Summary
             """)
-            uploaded_file = st.file_uploader("Choose a Excel file")
+            with st.spinner('Wait for it...'):
+                uploaded_file = st.file_uploader("Choose a Excel file")
             if uploaded_file is not None:
         #         bytes_data = uploaded_file.getvalue()
                 data = pd.read_excel(uploaded_file)     
