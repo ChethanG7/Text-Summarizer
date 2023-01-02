@@ -53,7 +53,7 @@ def main():
                     data.to_excel(writer, index=False, sheet_name='Sheet1')
                     processed_data = output.getvalue()
                     return processed_data
-                return st.write('Output file',data.head(10))   
+                return convert_df(data)   
 #                 st.download_button("Press to Download",
 #                                    convert_df(data),
 #                                    "processed_file.xlsx")
