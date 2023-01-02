@@ -44,15 +44,16 @@ def main():
             st.write("""
             ### Document Text Summary
             """)
-            with st.spinner('Wait for it...'):
-                uploaded_file = st.file_uploader("Choose a Excel file")
+            
+            uploaded_file = st.file_uploader("Choose a Excel file")
             if uploaded_file is not None:
         #         bytes_data = uploaded_file.getvalue()
-                data = pd.read_excel(uploaded_file)     
-                st.write('Preview of the attached file',data.head(10))
-                column_choice = st.selectbox("Select Column" , data.columns.to_list())
-                summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
-                st.button("Submit")
+                with st.spinner('Wait for it...'):    
+                    data = pd.read_excel(uploaded_file)     
+                    st.write('Preview of the attached file',data.head(10))
+                    column_choice = st.selectbox("Select Column" , data.columns.to_list())
+                    summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
+                    st.button("Submit")
     #         st.session_state["preview"] = data[:10]
     # #         for i in range(0, min(5, len(data))):
     # #             st.session_state["preview"] = st.session_state["preview"]+ data[i]
