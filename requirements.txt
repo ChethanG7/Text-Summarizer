@@ -6,3 +6,4 @@ pyxlsb
 transformers
 summarizer
 torch
+bert-extractive-summarizer
