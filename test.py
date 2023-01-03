@@ -6,7 +6,8 @@ import pandas as pd
 from io import BytesIO
 import time
 from pyxlsb import open_workbook as open_xlsb
-
+from transformers import *
+from summarizer import Summarizer
 
 
 def main():
@@ -24,13 +25,24 @@ def main():
             "nav-link-selected": {"background-color": "#02ab21"},
         }
         )
+        
+    def bert_custom_model(text):
+        
+        # Load model, model config and tokenizer via Transformers
+        custom_config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
+        custom_config.output_hidden_states=True
+        custom_tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
+        custom_model = AutoModel.from_pretrained('allenai/scibert_scivocab_uncased', config=custom_config)
+        model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
+        return model(body)
+    
     if choose == 'Text Summarization':
         activities = ["Summarize via Text", "Summazrize via File"]
         choice = st.selectbox("Select Activity", activities)
         if choice == "Summarize via Text":
             st.subheader("Summary using NLP")
             raw_text = st.text_area("Enter Text Here","Type here")
-            summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
+            summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","BERT"])
             if st.button("Summarize Via Text"):
                 if summary_choice == 'Gensim':
                     try:
@@ -40,8 +52,8 @@ def main():
                 elif summary_choice == 'Sumy Lex rank':
                     summary_result = summarize(raw_text)
 
-                elif summary_choice == 'NLTK':
-                    summary_result = summarize(raw_text)
+                elif summary_choice == 'BERT':
+                    summary_result = bert_custom_model(raw_text)
                     
                 st.write(summary_result)
 
@@ -59,7 +71,7 @@ def main():
                     with col1:
                         column_choice = st.selectbox("Select Column" , data.columns.to_list())
                     with col2:
-                        summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
+                        summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","BERT"])
                 col3, col4 = st.columns([1,6])
                 with col3:
                     submit_data = st.button("Submit")
