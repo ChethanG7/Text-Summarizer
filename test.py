@@ -75,8 +75,9 @@ def main():
                     submit_data = st.button("Submit")
                     if submit_data:                                       
                         with col4:
-                            st.button("Download Processed file")
-                            st.text("Processed Successfully")
+                            with st.spinner('Processing...'):
+                                st.button("Download Processed file")
+#                             st.text("Processed Successfully")
          
         
             
