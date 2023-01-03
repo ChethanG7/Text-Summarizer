@@ -72,10 +72,11 @@ def main():
                         summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
                 col3, col4 = st.columns([1,6])
                 with col3:
-                    st.button("Submit",on_click=process(data,column_choice,summary_choice))
-                with col4:
-                    st.button("Download Processed file")
-                
+                    submit_data = st.button("Submit")
+                    if submit_data:                                       
+                        with col4:
+                            st.button("Download Processed file")
+                            st.text("Processed Successfully")
          
         
             
