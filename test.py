@@ -34,7 +34,7 @@ def main():
         custom_tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
         custom_model = AutoModel.from_pretrained('allenai/scibert_scivocab_uncased', config=custom_config)
         model = Summarizer()
-        return model(body)
+        return model(text)
     
     if choose == 'Text Summarization':
         activities = ["Summarize via Text", "Summazrize via File"]
