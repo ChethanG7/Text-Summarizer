@@ -4,6 +4,7 @@ import streamlit.components.v1 as html
 from gensim.summarization import summarize
 import pandas as pd
 from io import BytesIO
+import time
 
 
 def main():
@@ -76,6 +77,7 @@ def main():
                     if submit_data:                                       
                         with col4:
                             with st.spinner('Processing...'):
+                                time.sleep(5)
                                 st.button("Download Processed file")
 #                             st.text("Processed Successfully")
          
