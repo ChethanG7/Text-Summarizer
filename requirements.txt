@@ -3,3 +3,5 @@ openpyxl
 streamlit_option_menu
 xlsxwriter
 pyxlsb
+transformers
+summarizer
