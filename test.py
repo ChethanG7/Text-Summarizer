@@ -5,6 +5,8 @@ from gensim.summarization import summarize
 import pandas as pd
 from io import BytesIO
 import time
+from pyxlsb import open_workbook as open_xlsb
+
 
 
 def main():
@@ -78,7 +80,22 @@ def main():
                         with col4:
                             with st.spinner('Processing...'):
                                 time.sleep(5)
-                                st.button("Download Processed file")
+                                def to_excel(df):
+                                    output = BytesIO()
+                                    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+                                    df.to_excel(writer, index=False, sheet_name='Sheet1')
+                                    workbook = writer.book
+                                    worksheet = writer.sheets['Sheet1']
+                                    format1 = workbook.add_format({'num_format': '0.00'}) 
+                                    worksheet.set_column('A:A', None, format1)  
+                                    writer.save()
+                                    processed_data = output.getvalue()
+                                    return processed_data
+                                df_xlsx = to_excel(data)
+                                st.download_button(label='📥 Download Current Result',
+                                                                data=df_xlsx ,
+                                                                file_name= 'df_test.xlsx')
+#                                 st.button("Download Processed file")
 #                             st.text("Processed Successfully")
          
         
