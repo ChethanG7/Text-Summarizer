@@ -90,7 +90,7 @@ def main():
                                         summary_result = summarize(raw_text)
 
                                     elif summary_choice == 'BERT':
-                                        data[column_choice+' Summary'] = data[column_choice].apply(bert_custom_model())
+                                        data[column_choice+' Summary'] = data[column_choice].apply(bert_custom_model)
                                     return data                              
                                 
                                 def to_excel(df):
