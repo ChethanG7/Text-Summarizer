@@ -28,17 +28,16 @@ def main():
         }
         )
         
-    def bert_custom_model(text):
-        
+    def bert_custom_model(text,custom_model=custom_model, custom_tokenizer=custom_tokenizer):        
         # Load model, model config and tokenizer via Transformers
-        custom_config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
-        custom_config.output_hidden_states=True
-        custom_tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
-        custom_model = AutoModel.from_pretrained('allenai/scibert_scivocab_uncased', config=custom_config)
         model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
         return model(text)
     
     if choose == 'Text Summarization':
+        custom_config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
+        custom_config.output_hidden_states=True
+        custom_tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
+        custom_model = AutoModel.from_pretrained('allenai/scibert_scivocab_uncased', config=custom_config)
         activities = ["Summarize via Text", "Summazrize via File"]
         choice = st.selectbox("Select Activity", activities)
         if choice == "Summarize via Text":
