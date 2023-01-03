@@ -81,7 +81,16 @@ def main():
                         with col4:
                             with st.spinner('Processing...'):
                                 def get_summary(data,column_choice,summary_choice):
-                                    
+                                    if summary_choice == 'Gensim':
+                                        try:
+                                            summary_result = summarize(raw_text)
+                                        except:
+                                            summary_result = raw_text
+                                    elif summary_choice == 'Sumy Lex rank':
+                                        summary_result = summarize(raw_text)
+
+                                    elif summary_choice == 'BERT':
+                                        data[column_choice+' Summary'] = data[column_choice].apply(bert_custom_model())
                                     return data                              
                                 
                                 def to_excel(df):
