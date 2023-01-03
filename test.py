@@ -65,12 +65,15 @@ def main():
                 with st.spinner('Wait for it...'):    
                     data = pd.read_excel(uploaded_file)     
                     st.write('Preview of the attached file',data.head(10))
-                    column_choice = st.selectbox("Select Column" , data.columns.to_list())
-                    summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
-                col1, col2, col3 = st.columns([1,1,1])
-                with col1:
+                    col1, col2 = st.columns([1,1])
+                    with col1:
+                        column_choice = st.selectbox("Select Column" , data.columns.to_list())
+                    with col2:
+                        summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
+                col3, col4 = st.columns([1,1])
+                with col3:
                     st.button("Submit",on_click=process(data,column_choice,summary_choice))
-                with col2:
+                with col4:
                     st.button("Download Processed file")
                 
          
