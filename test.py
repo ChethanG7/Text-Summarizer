@@ -70,7 +70,7 @@ def main():
                         column_choice = st.selectbox("Select Column" , data.columns.to_list())
                     with col2:
                         summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","NLTK"])
-                col3, col4 = st.columns([1,4])
+                col3, col4 = st.columns([1,6])
                 with col3:
                     st.button("Submit",on_click=process(data,column_choice,summary_choice))
                 with col4:
