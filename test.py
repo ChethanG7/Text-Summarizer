@@ -34,7 +34,7 @@ def main():
         custom_config.output_hidden_states=True
         custom_tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
         custom_model = AutoModel.from_pretrained('allenai/scibert_scivocab_uncased', config=custom_config)
-        model = Summarizer()
+        model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
         return model(text)
     
     if choose == 'Text Summarization':
