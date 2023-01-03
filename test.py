@@ -8,6 +8,7 @@ import time
 from pyxlsb import open_workbook as open_xlsb
 from transformers import *
 from summarizer import Summarizer
+import torch
 
 
 def main():
