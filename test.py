@@ -3,6 +3,7 @@ from streamlit_option_menu import option_menu
 import streamlit.components.v1 as html
 from gensim.summarization import summarize
 import pandas as pd
+import numpy as np
 from io import BytesIO
 import time
 from pyxlsb import open_workbook as open_xlsb
@@ -90,6 +91,7 @@ def main():
                                         summary_result = summarize(raw_text)
 
                                     elif summary_choice == 'BERT':
+                                        data = data.replace(np.nan,'')
                                         data[column_choice+' Summary'] = data[column_choice].apply(bert_custom_model)
                                     return data                              
                                 
