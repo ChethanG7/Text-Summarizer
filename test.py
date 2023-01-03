@@ -54,7 +54,8 @@ def main():
                     summary_result = summarize(raw_text)
 
                 elif summary_choice == 'BERT':
-                    summary_result = bert_custom_model(raw_text)
+                    with st.spinner('Processing...'):
+                        summary_result = bert_custom_model(raw_text)
                     
                 st.write(summary_result)
 
