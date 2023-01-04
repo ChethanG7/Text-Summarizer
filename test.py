@@ -20,6 +20,12 @@ def main():
     custom_tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     custom_model = AutoModel.from_pretrained('allenai/scibert_scivocab_uncased', config=custom_config)
     
+    @st.cache(hash_funcs={"MyUnhashableClass": lambda _:None})
+    def bert_custom_model(text,custom_model=custom_model, custom_tokenizer=custom_tokenizer):        
+        # Load model, model config and tokenizer via Transformers
+        model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
+        return model(text)
+    
     st.title("Text Summarizer App")
     
     with st.sidebar:
@@ -34,11 +40,7 @@ def main():
         }
         )
      
-    @st.cache
-    def bert_custom_model(text,custom_model=custom_model, custom_tokenizer=custom_tokenizer):        
-        # Load model, model config and tokenizer via Transformers
-        model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
-        return model(text)
+    
     
     if choose == 'Text Summarization':
         activities = ["Summarize via Text", "Summazrize via File"]
