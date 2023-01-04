@@ -14,6 +14,7 @@ import torch
 
 def main():
     
+    
     custom_config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
     custom_config.output_hidden_states=True
     custom_tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
@@ -33,7 +34,7 @@ def main():
         }
         )
      
-    
+    @st.cache
     def bert_custom_model(text,custom_model=custom_model, custom_tokenizer=custom_tokenizer):        
         # Load model, model config and tokenizer via Transformers
         model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
