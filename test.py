@@ -12,22 +12,27 @@ from summarizer import Summarizer
 import torch
 
 
-def main():
-    
-    
+
+@st.cache(allow_output_mutation=True)
+def load_model():
     custom_config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
     custom_config.output_hidden_states=True
     custom_tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     custom_model = AutoModel.from_pretrained('allenai/scibert_scivocab_uncased', config=custom_config)
-    
-    @st.cache(hash_funcs={"MyUnhashableClass": lambda _:None})
-    def bert_custom_model(text,custom_model=custom_model, custom_tokenizer=custom_tokenizer):        
-        # Load model, model config and tokenizer via Transformers
-        model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
+    model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
+    return model
+
+# def bert_custom_model(text,custom_model=custom_model, custom_tokenizer=custom_tokenizer):        
+#     # Load model, model config and tokenizer via Transformers
+#     model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
+#     return model(text)
+
+def main():
+    model = load_model()
+    def bert_model(text):
         return model(text)
     
-    st.title("Text Summarizer App")
-    
+    st.title("Text Summarizer App")    
     with st.sidebar:
         choose = option_menu("App Gallery", ["About", "Text Summarization", "Topic Modelling",  "Contact"],
                              icons=['house-fill', 'book-half', 'badge-tm-fill','person-lines-fill'],
@@ -39,9 +44,7 @@ def main():
             "nav-link-selected": {"background-color": "#02ab21"},
         }
         )
-     
-    
-    
+
     if choose == 'Text Summarization':
         activities = ["Summarize via Text", "Summazrize via File"]
         choice = st.selectbox("Select Activity", activities)
@@ -60,15 +63,15 @@ def main():
 
                 elif summary_choice == 'BERT':
                     with st.spinner('Processing...'):
-                        summary_result = bert_custom_model(raw_text)
-                    
+                        summary_result = bert_model(raw_text)
+
                 st.write(summary_result)
 
         if choice == "Summazrize via File":
             st.write("""
             ### Document Text Summary
             """)
-               
+
             uploaded_file = st.file_uploader("Choose a Excel file")
             if uploaded_file is not None:
                 with st.spinner('Wait for it...'):    
@@ -96,9 +99,9 @@ def main():
 
                                     elif summary_choice == 'BERT':
                                         data = data.replace(np.nan,'')
-                                        data[column_choice+' Summary'] = data[column_choice].apply(bert_custom_model)
+                                        data[column_choice+' Summary'] = data[column_choice].apply(bert_model)
                                     return data                              
-                                
+
                                 def to_excel(df):
                                     output = BytesIO()
                                     writer = pd.ExcelWriter(output, engine='xlsxwriter')
@@ -110,7 +113,7 @@ def main():
                                     writer.save()
                                     processed_data = output.getvalue()
                                     return processed_data
-                                
+
                                 data = get_summary(data,column_choice,summary_choice)
                                 df_xlsx = to_excel(data)
                                 st.download_button(label='📥 Download Processed Result',
