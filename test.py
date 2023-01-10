@@ -119,7 +119,7 @@ def main():
     lex_model = lex_customized()
     bert_model = load_model()
     
-    def lex_model(text):
+    def lex_model_main(text):
         sentences = nltk.sent_tokenize(text)
         embeddings = lex_model.encode(sentences, convert_to_tensor=True)         #Compute the sentence embeddings
         cos_scores = util.cos_sim(embeddings, embeddings).numpy()         #Compute the pair-wise cosine similarities
@@ -130,7 +130,7 @@ def main():
             summary_list.append(sentences[idx])
         return (' '.join(summary_list)) 
     
-    def bert_model(text):
+    def bert_model_main(text):
         summary = bert_model(text)
         if summary!='':
             return summary
@@ -164,11 +164,11 @@ def main():
                     except:
                         summary_result = raw_text
                 elif summary_choice == 'Lex Rank':
-                    summary_result = lex_model(raw_text)
+                    summary_result = lex_model_main(raw_text)
 
                 elif summary_choice == 'BERT':
                     with st.spinner('Processing...'):
-                        summary_result = bert_model(raw_text)
+                        summary_result = bert_model_main(raw_text)
 
                 st.write(summary_result)
 
@@ -201,10 +201,10 @@ def main():
                                             summary_result = raw_text
                                     elif summary_choice == 'Lex Rank':
                                         data = data.replace(np.nan,'')
-                                        data[column_choice+' Summary'] = data[column_choice].apply(lex_model)
+                                        data[column_choice+' Summary'] = data[column_choice].apply(lex_model_main)
                                     elif summary_choice == 'BERT':
                                         data = data.replace(np.nan,'')
-                                        data[column_choice+' Summary'] = data[column_choice].apply(bert_model)
+                                        data[column_choice+' Summary'] = data[column_choice].apply(bert_model_main)
                                     return data                              
 
                                 def to_excel(df):
