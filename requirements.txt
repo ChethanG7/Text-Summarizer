@@ -9,3 +9,4 @@ torch
 bert-extractive-summarizer
 sentence-transformers
 scipy
+nltk
