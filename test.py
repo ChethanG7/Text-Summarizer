@@ -11,6 +11,7 @@ from transformers import *
 from sentence_transformers import SentenceTransformer, util
 from summarizer import Summarizer
 import torch
+import nltk
 from scipy.sparse.csgraph import connected_components
 
 
@@ -24,6 +25,7 @@ def load_model():
     model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
     return model
 
+@st.cache(allow_output_mutation=True)
 def lex_customized():
     def degree_centrality_scores(
         similarity_matrix,
@@ -153,14 +155,14 @@ def main():
         if choice == "Summarize via Text":
             st.subheader("Summary using NLP")
             raw_text = st.text_area("Enter Text Here","Type here")
-            summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","BERT"])
+            summary_choice = st.selectbox("Summary Choice" , ["Gensim","Lex Rank","BERT"])
             if st.button("Summarize Via Text"):
                 if summary_choice == 'Gensim':
                     try:
                         summary_result = summarize(raw_text)
                     except:
                         summary_result = raw_text
-                elif summary_choice == 'Sumy Lex rank':
+                elif summary_choice == 'Lex Rank':
                     summary_result = lex_model(raw_text)
 
                 elif summary_choice == 'BERT':
@@ -183,7 +185,7 @@ def main():
                     with col1:
                         column_choice = st.selectbox("Select Column" , data.columns.to_list())
                     with col2:
-                        summary_choice = st.selectbox("Summary Choice" , ["Gensim","Sumy Lex rank","BERT"])
+                        summary_choice = st.selectbox("Summary Choice" , ["Gensim","Lex Rank","BERT"])
                 col3, col4 = st.columns([1,6])
                 with col3:
                     submit_data = st.button("Submit")
