@@ -119,7 +119,7 @@ def main():
     bert_model = load_model()
     
     def lex_model(text):
-        sentences = nltk.sent_tokenize(document)
+        sentences = nltk.sent_tokenize(text)
         embeddings = model.encode(sentences, convert_to_tensor=True)         #Compute the sentence embeddings
         cos_scores = util.cos_sim(embeddings, embeddings).numpy()         #Compute the pair-wise cosine similarities
         centrality_scores = degree_centrality_scores(cos_scores, threshold=None)        #Compute the centrality for each sentence
