@@ -121,7 +121,7 @@ def main():
     
     def lex_model(text):
         sentences = nltk.sent_tokenize(text)
-        embeddings = model.encode(sentences, convert_to_tensor=True)         #Compute the sentence embeddings
+        embeddings = lex_model.encode(sentences, convert_to_tensor=True)         #Compute the sentence embeddings
         cos_scores = util.cos_sim(embeddings, embeddings).numpy()         #Compute the pair-wise cosine similarities
         centrality_scores = degree_centrality_scores(cos_scores, threshold=None)        #Compute the centrality for each sentence
         most_central_sentence_indices = np.argsort(-centrality_scores)        #We argsort so that the first element is the sentence with the highest score
