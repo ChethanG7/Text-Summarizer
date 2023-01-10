@@ -12,6 +12,7 @@ from sentence_transformers import SentenceTransformer, util
 from summarizer import Summarizer
 import torch
 import nltk
+nltk.download('punkt')
 from scipy.sparse.csgraph import connected_components
 
 
