@@ -17,8 +17,8 @@ from scipy.sparse.csgraph import connected_components
 
 
 @st.cache(allow_output_mutation=True)
-nltk.download('punkt')
 def load_model():
+    nltk.download('punkt')
     custom_config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
     custom_config.output_hidden_states=True
     custom_tokenizer = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
