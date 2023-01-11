@@ -12,12 +12,12 @@ from sentence_transformers import SentenceTransformer, util
 from summarizer import Summarizer
 import torch
 import nltk
-nltk.download('punkt')
 from scipy.sparse.csgraph import connected_components
 
 
 
 @st.cache(allow_output_mutation=True)
+nltk.download('punkt')
 def load_model():
     custom_config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
     custom_config.output_hidden_states=True
