@@ -28,109 +28,109 @@ def load_model():
     model = Summarizer(custom_model=custom_model, custom_tokenizer=custom_tokenizer)
     return model
 
-# @st.cache(allow_output_mutation=True)
-# def lex_customized():  
-#     model = SentenceTransformer('all-MiniLM-L6-v2')
-#     return model
+@st.cache(allow_output_mutation=True)
+def lex_customized():  
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+    return model
 
 def main():
-#     lex_model = lex_customized()
+    lex_model = lex_customized()
     bert_model = load_model()
     
-#     def lex_model_main(text):
-#         def degree_centrality_scores(
-#             similarity_matrix,
-#             threshold=None,
-#             increase_power=True,):
-#             if not (threshold is None
-#                 or isinstance(threshold, float)
-#                 and 0 <= threshold < 1):
+    def lex_model_main(text):
+        def degree_centrality_scores(
+            similarity_matrix,
+            threshold=None,
+            increase_power=True,):
+            if not (threshold is None
+                or isinstance(threshold, float)
+                and 0 <= threshold < 1):
 
-#                 raise ValueError('\'threshold\' should be a floating-point number ''from the interval [0, 1) or None',)
+                raise ValueError('\'threshold\' should be a floating-point number ''from the interval [0, 1) or None',)
 
-#             if threshold is None:
-#                 markov_matrix = create_markov_matrix(similarity_matrix)
-#             else:
-#                 markov_matrix = create_markov_matrix_discrete(
-#                     similarity_matrix,
-#                     threshold,)
+            if threshold is None:
+                markov_matrix = create_markov_matrix(similarity_matrix)
+            else:
+                markov_matrix = create_markov_matrix_discrete(
+                    similarity_matrix,
+                    threshold,)
 
-#             scores = stationary_distribution(
-#                 markov_matrix,
-#                 increase_power=increase_power,
-#                 normalized=False,)
-#             return scores
+            scores = stationary_distribution(
+                markov_matrix,
+                increase_power=increase_power,
+                normalized=False,)
+            return scores
 
-#         def _power_method(transition_matrix, increase_power=True):
-#             eigenvector = np.ones(len(transition_matrix))
-#             if len(eigenvector) == 1:
-#                 return eigenvector
-#             transition = transition_matrix.transpose()
-#             while True:
-#                 eigenvector_next = np.dot(transition, eigenvector)
-#                 if np.allclose(eigenvector_next, eigenvector):
-#                     return eigenvector_next
-#                 eigenvector = eigenvector_next
-#                 if increase_power:
-#                     transition = np.dot(transition, transition)
+        def _power_method(transition_matrix, increase_power=True):
+            eigenvector = np.ones(len(transition_matrix))
+            if len(eigenvector) == 1:
+                return eigenvector
+            transition = transition_matrix.transpose()
+            while True:
+                eigenvector_next = np.dot(transition, eigenvector)
+                if np.allclose(eigenvector_next, eigenvector):
+                    return eigenvector_next
+                eigenvector = eigenvector_next
+                if increase_power:
+                    transition = np.dot(transition, transition)
 
-#         def connected_nodes(matrix):
-#             _, labels = connected_components(matrix)
-#             groups = []
-#             for tag in np.unique(labels):
-#                 group = np.where(labels == tag)[0]
-#                 groups.append(group)
-#             return groups
+        def connected_nodes(matrix):
+            _, labels = connected_components(matrix)
+            groups = []
+            for tag in np.unique(labels):
+                group = np.where(labels == tag)[0]
+                groups.append(group)
+            return groups
 
-#         def create_markov_matrix(weights_matrix):
-#             n_1, n_2 = weights_matrix.shape
-#             if n_1 != n_2:
-#                 raise ValueError('\'weights_matrix\' should be square')
-#             row_sum = weights_matrix.sum(axis=1, keepdims=True)
-#             return weights_matrix / row_sum
+        def create_markov_matrix(weights_matrix):
+            n_1, n_2 = weights_matrix.shape
+            if n_1 != n_2:
+                raise ValueError('\'weights_matrix\' should be square')
+            row_sum = weights_matrix.sum(axis=1, keepdims=True)
+            return weights_matrix / row_sum
 
-#         def create_markov_matrix_discrete(weights_matrix, threshold):
-#             discrete_weights_matrix = np.zeros(weights_matrix.shape)
-#             ixs = np.where(weights_matrix >= threshold)
-#             discrete_weights_matrix[ixs] = 1
-#             return create_markov_matrix(discrete_weights_matrix)
+        def create_markov_matrix_discrete(weights_matrix, threshold):
+            discrete_weights_matrix = np.zeros(weights_matrix.shape)
+            ixs = np.where(weights_matrix >= threshold)
+            discrete_weights_matrix[ixs] = 1
+            return create_markov_matrix(discrete_weights_matrix)
 
-#         def graph_nodes_clusters(transition_matrix, increase_power=True):
-#             clusters = connected_nodes(transition_matrix)
-#             clusters.sort(key=len, reverse=True)
-#             centroid_scores = []
-#             for group in clusters:
-#                 t_matrix = transition_matrix[np.ix_(group, group)]
-#                 eigenvector = _power_method(t_matrix, increase_power=increase_power)
-#                 centroid_scores.append(eigenvector / len(group))
-#             return clusters, centroid_scores
+        def graph_nodes_clusters(transition_matrix, increase_power=True):
+            clusters = connected_nodes(transition_matrix)
+            clusters.sort(key=len, reverse=True)
+            centroid_scores = []
+            for group in clusters:
+                t_matrix = transition_matrix[np.ix_(group, group)]
+                eigenvector = _power_method(t_matrix, increase_power=increase_power)
+                centroid_scores.append(eigenvector / len(group))
+            return clusters, centroid_scores
 
-#         def stationary_distribution(
-#             transition_matrix,
-#             increase_power=True,
-#             normalized=True,):
-#             n_1, n_2 = transition_matrix.shape
-#             if n_1 != n_2:
-#                 raise ValueError('\'transition_matrix\' should be square')
-#             distribution = np.zeros(n_1)
-#             grouped_indices = connected_nodes(transition_matrix)
-#             for group in grouped_indices:
-#                 t_matrix = transition_matrix[np.ix_(group, group)]
-#                 eigenvector = _power_method(t_matrix, increase_power=increase_power)
-#                 distribution[group] = eigenvector
-#             if normalized:
-#                 distribution /= n_1
-#             return distribution
+        def stationary_distribution(
+            transition_matrix,
+            increase_power=True,
+            normalized=True,):
+            n_1, n_2 = transition_matrix.shape
+            if n_1 != n_2:
+                raise ValueError('\'transition_matrix\' should be square')
+            distribution = np.zeros(n_1)
+            grouped_indices = connected_nodes(transition_matrix)
+            for group in grouped_indices:
+                t_matrix = transition_matrix[np.ix_(group, group)]
+                eigenvector = _power_method(t_matrix, increase_power=increase_power)
+                distribution[group] = eigenvector
+            if normalized:
+                distribution /= n_1
+            return distribution
         
-#         sentences = nltk.sent_tokenize(text)
-#         embeddings = lex_model.encode(sentences, convert_to_tensor=True)         #Compute the sentence embeddings
-#         cos_scores = util.cos_sim(embeddings, embeddings).numpy()         #Compute the pair-wise cosine similarities
-#         centrality_scores = degree_centrality_scores(cos_scores, threshold=None)        #Compute the centrality for each sentence
-#         most_central_sentence_indices = np.argsort(-centrality_scores)        #We argsort so that the first element is the sentence with the highest score
-#         summary_list=[]                                                     #return 10 sentences with the highest scores
-#         for idx in most_central_sentence_indices[0:10]:
-#             summary_list.append(sentences[idx])
-#         return (' '.join(summary_list)) 
+        sentences = nltk.sent_tokenize(text)
+        embeddings = lex_model.encode(sentences, convert_to_tensor=True)         #Compute the sentence embeddings
+        cos_scores = util.cos_sim(embeddings, embeddings).numpy()         #Compute the pair-wise cosine similarities
+        centrality_scores = degree_centrality_scores(cos_scores, threshold=None)        #Compute the centrality for each sentence
+        most_central_sentence_indices = np.argsort(-centrality_scores)        #We argsort so that the first element is the sentence with the highest score
+        summary_list=[]                                                     #return 10 sentences with the highest scores
+        for idx in most_central_sentence_indices[0:10]:
+            summary_list.append(sentences[idx])
+        return (' '.join(summary_list)) 
     
     def bert_model_main(text):
         summary = bert_model(text)
@@ -202,9 +202,8 @@ def main():
                                         except:
                                             summary_result = raw_text
                                     elif summary_choice == 'Lex Rank':
-                                        summary_result = summarize(raw_text)
-#                                         data = data.replace(np.nan,'')
-#                                         data[column_choice+' Summary'] = data[column_choice].apply(lex_model_main)
+                                        data = data.replace(np.nan,'')
+                                        data[column_choice+' Summary'] = data[column_choice].apply(lex_model_main)
                                     elif summary_choice == 'BERT':
                                         data = data.replace(np.nan,'')
                                         data[column_choice+' Summary'] = data[column_choice].apply(bert_model_main)
